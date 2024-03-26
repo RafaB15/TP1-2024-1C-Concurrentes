@@ -2,6 +2,7 @@ mod error_initialization;
 
 use std::env::args;
 use error_initialization::ErrorInitialization;
+use tp1_fork_join_108225::pages_information::pages::Pages;
 
 const _DATA_PATH: &str = "../../data";
 
@@ -24,6 +25,8 @@ fn main() -> Result<(), ErrorInitialization> {
     let arguments: Vec<String> = args().collect();
     verify_amount_of_arguments(&arguments)?;
     let _num_threads = obtain_number_worker_threads(&arguments[1])?;
+
+    let _pages = Pages::new(); 
 
     Ok(())
 }

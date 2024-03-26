@@ -1,1 +1,1 @@
-pub mod questions;
+pub mod pages_information;
