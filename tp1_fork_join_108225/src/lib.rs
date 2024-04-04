@@ -1,1 +1,1 @@
-pub mod pages_information;
+pub mod sites_information;

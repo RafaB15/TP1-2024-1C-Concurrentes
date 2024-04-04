@@ -2,9 +2,9 @@ mod error_initialization;
 
 use std::env::args;
 use error_initialization::ErrorInitialization;
-use tp1_fork_join_108225::pages_information::pages::Pages;
+use tp1_fork_join_108225::sites_information::sites_collection::SitesCollection;
 
-const _DATA_PATH: &str = "../../data";
+const DATA_PATH: &str = "../test_data";
 
 fn verify_amount_of_arguments(arguments: &Vec<String>) -> Result<(), ErrorInitialization>{
     if arguments.len() != 2 {
@@ -26,7 +26,18 @@ fn main() -> Result<(), ErrorInitialization> {
     verify_amount_of_arguments(&arguments)?;
     let _num_threads = obtain_number_worker_threads(&arguments[1])?;
 
-    let _pages = Pages::new(); 
+    let start = std::time::Instant::now();
 
+    let sites = match SitesCollection::new(DATA_PATH){
+        Ok(sites) => sites,
+        Err(er) => return Err(ErrorInitialization::ErrorInSites(er)),
+    };
+
+    let finish = std::time::Instant::now();
+    let duration = finish.duration_since(start);
+
+    sites.print_info();
+
+    println!("Duró {}\n", duration.as_millis());
     Ok(())
 }
