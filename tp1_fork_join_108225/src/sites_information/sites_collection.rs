@@ -1,8 +1,5 @@
 use super::{
-    site::Site,
-    question::Question,
-    question_information::QuestionInformation,
-    parsing_error::ParsingError,
+    parsing_error::ParsingError, question::Question, question_information::QuestionInformation, site::Site
 };
 
 use std::{
@@ -22,7 +19,7 @@ impl SitesCollection {
         let data_directory = Self::get_directory(files_path)?;
         let files_paths = Self::get_files_paths(data_directory)?;
         println!("{:?}\n", files_paths);
-        let sites = Self::get_sites(files_paths)?;
+        let sites = Self::get_sites(files_paths);
 
         Ok(SitesCollection { sites })
     }
@@ -55,10 +52,8 @@ impl SitesCollection {
         Ok(dir_entries)
     }
 
-    fn get_sites(files_paths: Vec<PathBuf>) -> Result<Vec<Site>, ParsingError> {
-        let mut sites: Vec<Site> = Vec::new();
-        
-        for path in files_paths {
+    fn get_sites(files_paths: Vec<PathBuf>) -> Vec<Site> {
+        let sites: Vec<Site> = files_paths.par_iter().filter_map(|path| {
             if let Ok(file) = File::open(&path) {
                 let reader = BufReader::new(file);
                 let questions_info: Vec<QuestionInformation> = reader.lines().par_bridge().filter_map(|line| {
@@ -74,11 +69,13 @@ impl SitesCollection {
                         },
                     }
                 }).collect();
-                
-                sites.push(Site::new(questions_info));
+                Some(Site::new(questions_info))
+            } else {
+                None
             }
-        }
-        Ok(sites)
+        }).collect();
+
+        sites
     }
 
     pub fn print_info(&self) {

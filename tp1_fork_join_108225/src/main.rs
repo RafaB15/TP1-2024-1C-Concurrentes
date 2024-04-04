@@ -2,6 +2,7 @@ mod error_initialization;
 
 use std::env::args;
 use error_initialization::ErrorInitialization;
+use serde_json::Value;
 use tp1_fork_join_108225::sites_information::sites_collection::SitesCollection;
 
 const DATA_PATH: &str = "../test_data";
@@ -39,5 +40,8 @@ fn main() -> Result<(), ErrorInitialization> {
     sites.print_info();
 
     println!("Duró {}\n", duration.as_millis());
+    let answer = r#"{"padron": "108225"}"#;
+    let parsed: Value = serde_json::from_str(answer).unwrap();
+    println!("{}", serde_json::to_string_pretty(&parsed).unwrap());
     Ok(())
 }
