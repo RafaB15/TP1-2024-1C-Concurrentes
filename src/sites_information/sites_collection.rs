@@ -1,5 +1,5 @@
 use super::{
-    parsing_error::ParsingError, question::Question, question_information::QuestionInformation, site::Site
+    parsing_error::ParsingError, question::Question, site::Site
 };
 
 use std::{
@@ -56,7 +56,7 @@ impl SitesCollection {
         let sites: Vec<Site> = files_paths.par_iter().filter_map(|path| {
             if let Ok(file) = File::open(&path) {
                 let reader = BufReader::new(file);
-                let questions_info: Vec<QuestionInformation> = reader.lines().par_bridge().filter_map(|line| {
+                let site= reader.lines().par_bridge().filter_map(|line| {
                     let valid_line = match line {
                         Ok(line) => line,
                         Err(_) => return None,
@@ -68,8 +68,14 @@ impl SitesCollection {
                             None
                         },
                     }
-                }).collect();
-                Some(Site::new(questions_info))
+                }).fold(|| Site::new(), |mut site, question|{ 
+                    site.add_question(question);
+                    site
+                }).reduce(Site::new, |mut site, other| {
+                    site.merge(other);
+                    site
+                });
+                Some(site)
             } else {
                 None
             }

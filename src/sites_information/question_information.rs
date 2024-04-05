@@ -1,11 +1,11 @@
 #[derive(Debug)]
 pub struct QuestionInformation {
-    words: usize,
-    tags: Vec<String>
+    pub words: u16,
+    pub tags: Vec<String>
 }
 
 impl QuestionInformation {
-    pub fn new(words: usize, tags: Vec<String>) -> Self {
+    pub fn new(words: u16, tags: Vec<String>) -> Self {
         QuestionInformation { words, tags }
     }
 

@@ -11,6 +11,6 @@ pub struct Question {
 impl Question {
     pub fn into_information(self) -> QuestionInformation {
         let word_count: usize = self.texts.iter().map(|text| text.len()).sum();
-        QuestionInformation::new(word_count, self.tags)
+        QuestionInformation::new(word_count as u16, self.tags)
     }
 }

@@ -5,7 +5,7 @@ use error_initialization::ErrorInitialization;
 use serde_json::Value;
 use tp1_fork_join_108225::sites_information::sites_collection::SitesCollection;
 
-const DATA_PATH: &str = "../test_data";
+const DATA_PATH: &str = "data";
 
 fn verify_amount_of_arguments(arguments: &Vec<String>) -> Result<(), ErrorInitialization>{
     if arguments.len() != 2 {
