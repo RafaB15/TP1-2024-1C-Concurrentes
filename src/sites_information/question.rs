@@ -5,7 +5,7 @@ use super::question_information::QuestionInformation;
 #[derive(Debug, Deserialize)]
 pub struct Question {
     texts: Vec<String>,
-    tags: Vec<String>
+    tags: Vec<String>,
 }
 
 impl Question {

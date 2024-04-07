@@ -2,4 +2,5 @@
 pub enum ParsingError {
     ErrorCouldNotOpenDataDirectory,
     ErrorWhileBrowsingTheDirectoryEntries,
+    ErrorWhileBuildingThreadpool(String),
 }

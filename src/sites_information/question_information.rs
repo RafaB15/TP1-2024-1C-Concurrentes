@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub struct QuestionInformation {
     pub words: u16,
-    pub tags: Vec<String>
+    pub tags: Vec<String>,
 }
 
 impl QuestionInformation {

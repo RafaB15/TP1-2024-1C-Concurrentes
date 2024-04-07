@@ -6,7 +6,10 @@ pub struct TagInformation {
 
 impl TagInformation {
     pub fn new(word_count: u32) -> Self {
-        TagInformation {question_count: 1, word_count}
+        TagInformation {
+            question_count: 1,
+            word_count,
+        }
     }
 
     pub fn add_appearance(&mut self, word_count: u32) {

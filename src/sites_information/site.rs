@@ -1,7 +1,4 @@
-use super::{
-    question_information::QuestionInformation,
-    tag_information::TagInformation,
-};
+use super::{question_information::QuestionInformation, tag_information::TagInformation};
 
 use std::collections::HashMap;
 
@@ -14,7 +11,11 @@ pub struct Site {
 
 impl Site {
     pub fn new() -> Self {
-        Site {question_count: 0, word_count: 0, tags: HashMap::new() }
+        Site {
+            question_count: 0,
+            word_count: 0,
+            tags: HashMap::new(),
+        }
     }
 
     pub fn merge(&mut self, other: Self) {
@@ -24,10 +25,10 @@ impl Site {
             match self.tags.get_mut(&tag) {
                 Some(tag_info) => {
                     tag_info.merge(other_info);
-                },
+                }
                 None => {
-                    self.tags.insert(tag, other_info);        
-                },
+                    self.tags.insert(tag, other_info);
+                }
             }
         }
     }
@@ -35,21 +36,24 @@ impl Site {
     pub fn add_question(&mut self, question: QuestionInformation) {
         self.question_count += 1;
         self.word_count += question.words as u32;
-        
+
         for tag in question.tags {
             match self.tags.get_mut(&tag) {
                 Some(tag_info) => {
                     tag_info.add_appearance(question.words as u32);
-                },
+                }
                 None => {
-                    self.tags.insert(tag, TagInformation::new(question.words as u32));        
-                },
+                    self.tags
+                        .insert(tag, TagInformation::new(question.words as u32));
+                }
             }
         }
-    } 
+    }
 
     pub fn print_info(&self) {
-        println!("I have {} questions and {} words", self.question_count, self.word_count);
+        println!(
+            "I have {} questions and {} words",
+            self.question_count, self.word_count
+        );
     }
-    
 }
