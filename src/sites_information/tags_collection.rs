@@ -1,3 +1,5 @@
+use serde_json::Value;
+
 use super::tag_information::TagInformation;
 
 use std::collections::HashMap;
@@ -36,5 +38,13 @@ impl TagsCollection {
                 }
             }
         }
+    }
+    
+    pub fn generate_json(&self) -> Value {
+        let mut tags_data = Value::Object(serde_json::Map::new());
+        for (tag, tag_information) in &self.tags {
+            tags_data[tag] = tag_information.generate_json();
+        }
+        tags_data
     }
 }

@@ -125,18 +125,22 @@ impl SitesCollection {
         }
         Ok(())
     }
-    /* 
-    pub fn generate_site_jason(site: &Site) {
-        let mut site_data = Value::Object(serde_json::Map::new());
-        site_data["questions"] = Value::from(site.get_question_count());
-        site_data["words"] = Value::from(site.get_word_count());
-
+    
+    pub fn generate_sites_jason(&self) -> Value {
+        let mut sites_data = Value::Object(serde_json::Map::new());
+        if let Some(sites) = &self.sites {
+            for (index, site) in sites.iter().enumerate() {
+                sites_data[index.to_string()] = site.generate_json();
+            }
+        }
+        sites_data
     }
 
-    pub fn generate_information_report(&self, padron: &str) {
+    pub fn generate_json_information(&self, padron: &str) -> Value {
         let mut data = Value::Object(serde_json::Map::new());
-
         data["padron"] = Value::String(padron.to_string());
+        data["sites"] = self.generate_sites_jason();
+        data
     }
-    */
+    
 }

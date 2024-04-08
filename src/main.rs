@@ -5,7 +5,7 @@ use serde_json::Value;
 use std::env::args;
 use tp1_fork_join_108225::sites_information::sites_collection::SitesCollection;
 
-const DATA_PATH: &str = "data";
+const DATA_PATH: &str = "test_data";
 
 fn verify_amount_of_arguments(arguments: &Vec<String>) -> Result<(), ErrorExecution> {
     if arguments.len() != 2 {
@@ -40,8 +40,8 @@ fn main() -> Result<(), ErrorExecution> {
     sites.print_info();
 
     println!("Duró {}\n", duration.as_millis());
-    let answer = r#"{"padron": "108225"}"#;
-    let parsed: Value = serde_json::from_str(answer).unwrap();
+
+    let parsed: Value = sites.generate_json_information("108225");
     println!("{}", serde_json::to_string_pretty(&parsed).unwrap());
     Ok(())
 }

@@ -1,3 +1,5 @@
+use serde_json::Value;
+
 use super::{
     question_information::QuestionInformation,
     tags_collection::TagsCollection
@@ -37,6 +39,14 @@ impl Site {
 
     pub fn get_word_count(&self) -> u32 {
         self.word_count
+    }
+
+    pub fn generate_json(&self) -> Value {
+        let mut site_data = Value::Object(serde_json::Map::new());
+        site_data["questions"] = Value::from(self.question_count);
+        site_data["words"] = Value::from(self.word_count);
+        site_data["tags"] = self.tags.generate_json();
+        site_data
     }
 
     pub fn print_info(&self) {
