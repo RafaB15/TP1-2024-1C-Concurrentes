@@ -7,14 +7,16 @@ use super::{
 
 #[derive(Debug)]
 pub struct Site {
+    name: Option<String>,
     question_count: u32,
     word_count: u32,
     tags: TagsCollection,
 }
 
 impl Site {
-    pub fn new() -> Self {
+    pub fn new(name: Option<String>) -> Self {
         Site {
+            name,
             question_count: 0,
             word_count: 0,
             tags: TagsCollection::new(),
@@ -33,12 +35,8 @@ impl Site {
         self.tags.add_tags(question.tags, question.words as u32);
     }
 
-    pub fn get_question_count(&self) -> u32{
-        self.question_count
-    }
-
-    pub fn get_word_count(&self) -> u32 {
-        self.word_count
+    pub fn get_name(&self) -> Option<String> {
+        self.name.clone()
     }
 
     pub fn generate_json(&self) -> Value {

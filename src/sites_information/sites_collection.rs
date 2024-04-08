@@ -68,6 +68,10 @@ impl SitesCollection {
             .par_iter()
             .filter_map(|path| {
                 if let Ok(file) = File::open(&path) {
+                    let file_name = match path.file_name() {
+                        Some(name) => Some(name.to_string_lossy().into_owned()),
+                        None => None,
+                    };
                     let reader = BufReader::new(file);
                     let site = reader
                         .lines()
@@ -86,13 +90,13 @@ impl SitesCollection {
                             }
                         })
                         .fold(
-                            || Site::new(),
+                            || Site::new(file_name.clone()),
                             |mut site, question| {
                                 site.add_question(question);
                                 site
                             },
                         )
-                        .reduce(Site::new, |mut site, other| {
+                        .reduce(|| Site::new(file_name.clone()), |mut site, other| {
                             site.merge(other);
                             site
                         });
@@ -130,7 +134,11 @@ impl SitesCollection {
         let mut sites_data = Value::Object(serde_json::Map::new());
         if let Some(sites) = &self.sites {
             for (index, site) in sites.iter().enumerate() {
-                sites_data[index.to_string()] = site.generate_json();
+                let name = match site.get_name() {
+                    Some(name) => name,
+                    None => index.to_string(),
+                };
+                sites_data[name] = site.generate_json();
             }
         }
         sites_data
