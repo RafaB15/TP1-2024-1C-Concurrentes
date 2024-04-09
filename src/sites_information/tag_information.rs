@@ -1,6 +1,6 @@
 use serde_json::Value;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct TagInformation {
     question_count: u32,
     word_count: u32,
@@ -22,8 +22,8 @@ impl TagInformation {
     pub fn merge(&mut self, other: Self) {
         self.question_count += other.question_count;
         self.word_count += other.word_count;
-    
     }
+  
     pub fn calculate_words_questions_ratio(&self) -> f64 {
         self.word_count as f64 / self.question_count as f64
     }

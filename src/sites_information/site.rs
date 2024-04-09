@@ -1,8 +1,7 @@
 use serde_json::Value;
 
 use super::{
-    question_information::QuestionInformation,
-    tags_collection::TagsCollection
+    question_information::QuestionInformation, tags_collection::TagsCollection
 };
 
 #[derive(Debug)]
@@ -46,6 +45,10 @@ impl Site {
         site_data["tags"] = self.tags.generate_json();
         site_data["chatty_tags"] = self.tags.generate_chatty_tags_json(10);
         site_data
+    }
+
+    pub fn get_tags(&self) -> &TagsCollection{
+        &self.tags
     }
 
     pub fn print_info(&self) {

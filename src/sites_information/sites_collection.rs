@@ -1,4 +1,4 @@
-use super::{parsing_error::ParsingError, question::Question, site::Site};
+use super::{parsing_error::ParsingError, question::Question, site::Site, tags_collection::TagsCollection};
 
 use std::{
     fs::{read_dir, File, ReadDir},
@@ -110,6 +110,28 @@ impl SitesCollection {
         Ok(sites)
     }
 
+    fn get_all_tags(&self) -> TagsCollection {
+        match &self.sites {
+            Some(sites) => {
+                sites.par_iter()
+                .fold(
+                    || TagsCollection::new(),
+                    |mut tags, site| {
+                        tags.merge_ref(site.get_tags());
+                        tags
+                    }
+                ).reduce(
+                    || TagsCollection::new(),
+                    |mut tags, other| {
+                        tags.merge(other);
+                        tags
+                    }
+                )    
+            },
+            None => TagsCollection::new()
+        }
+    }
+
     pub fn print_info(&self) {
         if let Some(sites) = &self.sites {
             for site in sites.iter() {
@@ -144,10 +166,16 @@ impl SitesCollection {
         sites_data
     }
 
+    pub fn generate_tags_json(&self) -> Value {
+        let tags = self.get_all_tags();
+        return tags.generate_json();
+    }
+
     pub fn generate_json_information(&self, padron: &str) -> Value {
         let mut data = Value::Object(serde_json::Map::new());
         data["padron"] = Value::String(padron.to_string());
         data["sites"] = self.generate_sites_jason();
+        data["tags"] = self.generate_tags_json();
         data
     }
     

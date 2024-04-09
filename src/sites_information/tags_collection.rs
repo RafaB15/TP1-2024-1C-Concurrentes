@@ -27,6 +27,19 @@ impl TagsCollection {
         }
     }
 
+    pub fn merge_ref(&mut self, other: &Self) {
+        for (tag, other_info) in &other.tags {
+            match self.tags.get_mut(tag) {
+                Some(tag_info) => {
+                    tag_info.merge(*other_info);
+                }
+                None => {
+                    self.tags.insert(tag.clone(), *other_info);
+                }
+            }
+        } 
+    }
+
     pub fn add_tags(&mut self, tags: Vec<String>, words: u32) {
         for tag in tags {
             match self.tags.get_mut(&tag) {
