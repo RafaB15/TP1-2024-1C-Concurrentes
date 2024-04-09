@@ -10,12 +10,24 @@ I have 10462 questions and 7247988 words
 I have 20139 questions and 11975795 words
 I have 16353 questions and 10792622 words
 I have 24447 questions and 15366975 words
-Duró 9022
+Duró 9872
 
 {
   "padron": "108225",
   "sites": {
     "academia.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "socializing",
+        "whistleblowing",
+        "south-korea",
+        "harassment",
+        "personal-misconduct",
+        "editing",
+        "abuse",
+        "south-east-asia",
+        "colleagues",
+        "lab-course"
+      ],
       "questions": 34331,
       "tags": {
         "abet": {
@@ -1886,6 +1898,18 @@ Duró 9022
       "words": 32680621
     },
     "android.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "samsung-conquer",
+        "huawei-u8800",
+        "instant-apps",
+        "nokia-6.1",
+        "motorola-milestone-2",
+        "motorola-moto-g-4g-plus",
+        "motorola-flipside",
+        "micro-g",
+        "sim-toolkit",
+        "dm-verity"
+      ],
       "questions": 51608,
       "tags": {
         "1.5-cupcake": {
@@ -7784,6 +7808,18 @@ Duró 9022
       "words": 32498122
     },
     "anime.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "doomed-megalopolis",
+        "hachinan",
+        "boku-no-imouto-wa-osaka-okan",
+        "seirei-gensouki",
+        "iria-zeiram",
+        "harmonie",
+        "mcdull",
+        "rune-soldier",
+        "genma-wars",
+        "love-love"
+      ],
       "questions": 11444,
       "tags": {
         ".hack": {
@@ -13718,6 +13754,18 @@ Duró 9022
       "words": 5777343
     },
     "apple.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "hazel",
+        "autofs",
+        "guid",
+        "bless",
+        "blued",
+        "hdiutil",
+        "core-storage",
+        "fsck",
+        "airdisk",
+        "hackintosh"
+      ],
       "questions": 110622,
       "tags": {
         "32-bit": {
@@ -17708,6 +17756,18 @@ Duró 9022
       "words": 73762478
     },
     "arduino.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "st7735",
+        "delete",
+        "inline",
+        "kalman",
+        "arduino-as-isp",
+        "littlefs",
+        "watchdog",
+        "sloeber",
+        "uecide",
+        "pl2303hx"
+      ],
       "questions": 19553,
       "tags": {
         "1-wire": {
@@ -19426,6 +19486,18 @@ Duró 9022
       "words": 22441643
     },
     "askubuntu.com.jsonl": {
+      "chatty_tags": [
+        "qtwebkit",
+        "gerbera",
+        "cfq",
+        "lirc-zilog",
+        "xdiagnose",
+        "subliminal",
+        "tripwire",
+        "onlyoffice",
+        "moksha",
+        "dracut"
+      ],
       "questions": 347925,
       "tags": {
         ".desktop": {
@@ -31900,6 +31972,18 @@ Duró 9022
       "words": 277085499
     },
     "astronomy.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "gravity-vlt-interferometer",
+        "asteroid-evolution",
+        "circumgalactic-medium",
+        "inner-horizon",
+        "app",
+        "chthonian",
+        "stellar-population",
+        "mass-gap",
+        "giant-magellan-telescope",
+        "neural-networks"
+      ],
       "questions": 10462,
       "tags": {
         "67p": {
@@ -34002,6 +34086,18 @@ Duró 9022
       "words": 7247988
     },
     "aviation.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "boeing-307-stratoliner",
+        "dassault-mercure",
+        "upforce",
+        "downforce",
+        "tu-104",
+        "luftvo",
+        "convair-240-family",
+        "fuel-line",
+        "stick-pusher",
+        "motorjet"
+      ],
       "questions": 20139,
       "tags": {
         "100hr-inspection": {
@@ -38044,6 +38140,18 @@ Duró 9022
       "words": 11975795
     },
     "bicycles.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "fsa",
+        "workout",
+        "compression-plug",
+        "band-brake",
+        "theoretical",
+        "amsterdam",
+        "recover",
+        "fabrication",
+        "stand",
+        "microshift"
+      ],
       "questions": 16353,
       "tags": {
         "1x10": {
@@ -40154,6 +40262,18 @@ Duró 9022
       "words": 10792622
     },
     "biology.stackexchange.com.jsonl": {
+      "chatty_tags": [
+        "autoclave",
+        "haplodiploid",
+        "histone-deacetylase",
+        "hypersensitivity",
+        "mercury",
+        "nucleotide-metabolism",
+        "nematode",
+        "chip-seq",
+        "microgravity",
+        "event-related-potential"
+      ],
       "questions": 24447,
       "tags": {
         "3d-bioprinting": {

@@ -44,6 +44,7 @@ impl Site {
         site_data["questions"] = Value::from(self.question_count);
         site_data["words"] = Value::from(self.word_count);
         site_data["tags"] = self.tags.generate_json();
+        site_data["chatty_tags"] = self.tags.generate_chatty_tags_json(10);
         site_data
     }
 

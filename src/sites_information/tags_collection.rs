@@ -47,4 +47,20 @@ impl TagsCollection {
         }
         tags_data
     }
+
+    pub fn generate_chatty_tags_json(&self, number_of_tags: u8) -> Value {
+        let mut tags: Vec<(&String, &TagInformation)> = self.tags.iter().collect();
+        tags.sort_by(|a, b| {
+            let ratio_a = a.1.calculate_words_questions_ratio();
+            let ratio_b = b.1.calculate_words_questions_ratio();
+            ratio_b.partial_cmp(&ratio_a).unwrap_or(std::cmp::Ordering::Equal)
+        });
+
+        let top_tags = tags.into_iter()
+                                                                .take(number_of_tags as usize)
+                                                                .map(|(tag, _)| Value::String(tag.clone()))
+                                                                .collect();
+
+        Value::Array(top_tags)                                                                
+    }
 }

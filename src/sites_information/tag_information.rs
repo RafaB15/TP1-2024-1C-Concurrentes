@@ -22,6 +22,10 @@ impl TagInformation {
     pub fn merge(&mut self, other: Self) {
         self.question_count += other.question_count;
         self.word_count += other.word_count;
+    
+    }
+    pub fn calculate_words_questions_ratio(&self) -> f64 {
+        self.word_count as f64 / self.question_count as f64
     }
 
     pub fn generate_json(&self) -> Value {
