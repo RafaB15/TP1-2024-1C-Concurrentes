@@ -165,17 +165,44 @@ impl SitesCollection {
         }
         sites_data
     }
+    
+    pub fn get_chatty_sites(&self, number_of_sites: u8) -> Value {
+        let ordered_sites = match &self.sites {
+            Some(sites) => {
+                let mut chatty_sites: Vec<&Site> = sites.iter().collect();
+                chatty_sites.sort_by(|a, b| {
+                    let ratio_a = a.calculate_words_questions_ratio();
+                    let ratio_b = b.calculate_words_questions_ratio();
+                    ratio_b.partial_cmp(&ratio_a).unwrap_or(std::cmp::Ordering::Equal)
+                });
 
-    pub fn generate_tags_json(&self) -> Value {
-        let tags = self.get_all_tags();
-        return tags.generate_json();
+                chatty_sites.into_iter()
+                                                    .take(number_of_sites as usize)
+                                                    .map(|site| Value::String(site.get_name().unwrap_or("Archivo sin nombre".to_string())))
+                                                    .collect()
+            },
+            None => Vec::new()
+        };
+        
+        Value::Array(ordered_sites)
     }
 
+    pub fn generate_totals_json(&self, tags: TagsCollection) -> Value {
+        let mut data = Value::Object(serde_json::Map::new());
+        data["chatty_sites"] = self.get_chatty_sites(10);
+        data["chatty_tags"] = tags.generate_chatty_tags_json(10);
+        data
+    }
+     
     pub fn generate_json_information(&self, padron: &str) -> Value {
         let mut data = Value::Object(serde_json::Map::new());
         data["padron"] = Value::String(padron.to_string());
         data["sites"] = self.generate_sites_jason();
-        data["tags"] = self.generate_tags_json();
+
+        let tags = self.get_all_tags();
+
+        data["tags"] = tags.generate_json();
+        data["totals"] = self.generate_totals_json(tags);
         data
     }
     

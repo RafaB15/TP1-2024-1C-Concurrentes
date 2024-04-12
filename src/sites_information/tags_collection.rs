@@ -26,7 +26,7 @@ impl TagsCollection {
             };
         }
     }
-
+    
     pub fn merge_ref(&mut self, other: &Self) {
         for (tag, other_info) in &other.tags {
             match self.tags.get_mut(tag) {
@@ -39,7 +39,7 @@ impl TagsCollection {
             }
         } 
     }
-
+    
     pub fn add_tags(&mut self, tags: Vec<String>, words: u32) {
         for tag in tags {
             match self.tags.get_mut(&tag) {

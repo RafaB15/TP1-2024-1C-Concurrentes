@@ -51,6 +51,10 @@ impl Site {
         &self.tags
     }
 
+    pub fn calculate_words_questions_ratio(&self) -> f64 {
+        self.word_count as f64 / self.question_count as f64 
+    }
+
     pub fn print_info(&self) {
         println!(
             "I have {} questions and {} words",
