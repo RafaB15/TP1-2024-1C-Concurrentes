@@ -27,19 +27,11 @@ fn main() -> Result<(), ErrorExecution> {
     verify_amount_of_arguments(&arguments)?;
     let num_threads = obtain_number_worker_threads(&arguments[1])?;
 
-    let start = std::time::Instant::now();
     let mut sites = SitesCollection::new();
 
     if let Err(er) = sites.load_sites(DATA_PATH, num_threads) {
         return Err(ErrorExecution::ErrorInSites(er));
     };
-
-    let finish = std::time::Instant::now();
-    let duration = finish.duration_since(start);
-
-    sites.print_info();
-
-    println!("Duró {}\n", duration.as_millis());
 
     let parsed: Value = sites.generate_json_information("108225");
     println!("{}", serde_json::to_string_pretty(&parsed).unwrap());

@@ -25,7 +25,6 @@ impl SitesCollection {
     pub fn load_sites(&mut self, files_path: &str, num_threads: u8) -> Result<(), ParsingError> {
         let data_directory = Self::get_directory(files_path)?;
         let files_paths = Self::get_files_paths(data_directory)?;
-        println!("{:?}\n", files_paths);
         match Self::get_sites(files_paths, num_threads) {
             Ok(sites) => self.sites = Some(sites),
             Err(e) => return Err(e),
@@ -84,7 +83,7 @@ impl SitesCollection {
                             match serde_json::from_str::<Question>(&valid_line) {
                                 Ok(question) => Some(question.into_information()),
                                 Err(e) => {
-                                    println!("{}", e);
+                                    eprintln!("{}", e);
                                     None
                                 }
                             }
@@ -129,14 +128,6 @@ impl SitesCollection {
                 )    
             },
             None => TagsCollection::new()
-        }
-    }
-
-    pub fn print_info(&self) {
-        if let Some(sites) = &self.sites {
-            for site in sites.iter() {
-                site.print_info();
-            }
         }
     }
 
