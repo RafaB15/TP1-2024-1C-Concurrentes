@@ -11,7 +11,9 @@ pub struct TagsCollection {
 
 impl TagsCollection {
     pub fn new() -> Self {
-        TagsCollection { tags: HashMap::new() }
+        TagsCollection {
+            tags: HashMap::new(),
+        }
     }
 
     pub fn merge(&mut self, other: Self) {
@@ -26,7 +28,7 @@ impl TagsCollection {
             };
         }
     }
-    
+
     pub fn merge_ref(&mut self, other: &Self) {
         for (tag, other_info) in &other.tags {
             match self.tags.get_mut(tag) {
@@ -37,9 +39,9 @@ impl TagsCollection {
                     self.tags.insert(tag.clone(), *other_info);
                 }
             }
-        } 
+        }
     }
-    
+
     pub fn add_tags(&mut self, tags: Vec<String>, words: u32) {
         for tag in tags {
             match self.tags.get_mut(&tag) {
@@ -52,7 +54,7 @@ impl TagsCollection {
             }
         }
     }
-    
+
     pub fn generate_json(&self) -> Value {
         let mut tags_data = Value::Object(serde_json::Map::new());
         for (tag, tag_information) in &self.tags {
@@ -66,14 +68,23 @@ impl TagsCollection {
         tags.sort_by(|a, b| {
             let ratio_a = a.1.calculate_words_questions_ratio();
             let ratio_b = b.1.calculate_words_questions_ratio();
-            ratio_b.partial_cmp(&ratio_a).unwrap_or(std::cmp::Ordering::Equal)
+            ratio_b
+                .partial_cmp(&ratio_a)
+                .unwrap_or(std::cmp::Ordering::Equal)
         });
 
-        let top_tags = tags.into_iter()
-                                                                .take(number_of_tags as usize)
-                                                                .map(|(tag, _)| Value::String(tag.clone()))
-                                                                .collect();
+        let top_tags = tags
+            .into_iter()
+            .take(number_of_tags as usize)
+            .map(|(tag, _)| Value::String(tag.clone()))
+            .collect();
 
-        Value::Array(top_tags)                                                                
+        Value::Array(top_tags)
+    }
+}
+
+impl Default for TagsCollection {
+    fn default() -> Self {
+        Self::new()
     }
 }

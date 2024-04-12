@@ -1,8 +1,6 @@
 use serde_json::Value;
 
-use super::{
-    question_information::QuestionInformation, tags_collection::TagsCollection
-};
+use super::{question_information::QuestionInformation, tags_collection::TagsCollection};
 
 #[derive(Debug)]
 pub struct Site {
@@ -47,11 +45,11 @@ impl Site {
         site_data
     }
 
-    pub fn get_tags(&self) -> &TagsCollection{
+    pub fn get_tags(&self) -> &TagsCollection {
         &self.tags
     }
 
     pub fn calculate_words_questions_ratio(&self) -> f64 {
-        self.word_count as f64 / self.question_count as f64 
+        self.word_count as f64 / self.question_count as f64
     }
 }

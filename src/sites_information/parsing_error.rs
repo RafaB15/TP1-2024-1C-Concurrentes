@@ -1,6 +1,6 @@
 #[derive(Debug)]
 pub enum ParsingError {
     ErrorCouldNotOpenDataDirectory,
-    ErrorWhileBrowsingTheDirectoryEntries,
+    ErrorWhileBrowsingTheDirectoryEntries(String),
     ErrorWhileBuildingThreadpool(String),
 }
