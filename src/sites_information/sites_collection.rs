@@ -12,12 +12,15 @@ use serde_json::Value;
 
 use rayon::{prelude::*, ThreadPoolBuilder};
 
+const JSONL_EXTENSION: &str = "jsonl";
+
+/**
+ * Represents a collection of sites.
+ */
 #[derive(Debug)]
 pub struct SitesCollection {
     sites: Option<Vec<Site>>,
 }
-
-const JSONL_EXTENSION: &str = "jsonl";
 
 impl SitesCollection {
     /**
@@ -50,10 +53,7 @@ impl SitesCollection {
     pub fn load_sites(&mut self, files_path: &str) -> Result<(), ParsingError> {
         let data_directory = Self::get_directory(files_path)?;
         let files_paths = Self::get_files_paths(data_directory)?;
-        match Self::get_sites(files_paths) {
-            Ok(sites) => self.sites = Some(sites),
-            Err(e) => return Err(e),
-        }
+        self.sites = Some(Self::get_sites(files_paths));
         Ok(())
     }
 
@@ -97,14 +97,15 @@ impl SitesCollection {
 
     /**
      * Returns the sites from the provided files paths using the provided amount of threads.
-     * If there was an error while building the threadpool, it returns an error.
      */
-    fn get_sites(files_paths: Vec<PathBuf>) -> Result<Vec<Site>, ParsingError> {
+    fn get_sites(files_paths: Vec<PathBuf>) -> Vec<Site> {
         let sites: Vec<Site> = files_paths
             .par_iter()
             .filter_map(|path| {
                 if let Ok(file) = File::open(path) {
-                    let file_name = path.file_name().map(|name| name.to_string_lossy().into_owned());
+                    let file_name = path
+                        .file_name()
+                        .map(|name| name.to_string_lossy().into_owned());
                     let reader = BufReader::new(file);
                     let site = reader
                         .lines()
@@ -143,31 +144,31 @@ impl SitesCollection {
             })
             .collect();
 
-        Ok(sites)
+        sites
     }
 
+    /**
+     * Generates a collection with all the tags from the different sites.
+     */
     fn get_all_tags(&self) -> TagsCollection {
         match &self.sites {
             Some(sites) => sites
                 .par_iter()
-                .fold(
-                    TagsCollection::new,
-                    |mut tags, site| {
-                        tags.merge_ref(site.get_tags());
-                        tags
-                    },
-                )
-                .reduce(
-                    TagsCollection::new,
-                    |mut tags, other| {
-                        tags.merge(other);
-                        tags
-                    },
-                ),
+                .fold(TagsCollection::new, |mut tags, site| {
+                    tags.merge_ref(site.get_tags());
+                    tags
+                })
+                .reduce(TagsCollection::new, |mut tags, other| {
+                    tags.merge(other);
+                    tags
+                }),
             None => TagsCollection::new(),
         }
     }
 
+    /**
+     * Generates a json with the sites information.
+     */
     pub fn generate_sites_jason(&self) -> Value {
         let mut sites_data = Value::Object(serde_json::Map::new());
         if let Some(sites) = &self.sites {
@@ -182,6 +183,9 @@ impl SitesCollection {
         sites_data
     }
 
+    /**
+     * Returns the sites with the highest ratio of words/questions in a json format.
+     */
     pub fn get_chatty_sites(&self, number_of_sites: u8) -> Value {
         let ordered_sites = match &self.sites {
             Some(sites) => {
@@ -208,6 +212,9 @@ impl SitesCollection {
         Value::Array(ordered_sites)
     }
 
+    /**
+     * Generates a json with the total amount of chatty sites and chatty tags.
+     */
     pub fn generate_totals_json(&self, tags: TagsCollection) -> Value {
         let mut data = Value::Object(serde_json::Map::new());
         data["chatty_sites"] = self.get_chatty_sites(10);
@@ -215,6 +222,9 @@ impl SitesCollection {
         data
     }
 
+    /**
+     * Generates a json with the site collection information.
+     */
     pub fn generate_json_information(&self, padron: &str) -> Value {
         let mut data = Value::Object(serde_json::Map::new());
         data["padron"] = Value::String(padron.to_string());
@@ -229,6 +239,9 @@ impl SitesCollection {
 }
 
 impl Default for SitesCollection {
+    /**
+     * Creates a new SitesCollection instance with the default values.
+     */
     fn default() -> Self {
         Self::new()
     }

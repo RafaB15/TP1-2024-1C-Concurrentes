@@ -4,18 +4,28 @@ use super::tag_information::TagInformation;
 
 use std::collections::HashMap;
 
+/**
+ * Represents a collection of tags with their information.
+ */
 #[derive(Debug)]
 pub struct TagsCollection {
     tags: HashMap<String, TagInformation>,
 }
 
 impl TagsCollection {
+    /**
+     * Creates a new tags collection.
+     */
     pub fn new() -> Self {
         TagsCollection {
             tags: HashMap::new(),
         }
     }
 
+    /**
+     * Merges the information of the tags collection with the information of another tags collection.
+     * It takes ownership of the other tags collection, making it unusable after the merge.
+     */
     pub fn merge(&mut self, other: Self) {
         for (tag, other_info) in other.tags {
             match self.tags.get_mut(&tag) {
@@ -29,6 +39,10 @@ impl TagsCollection {
         }
     }
 
+    /**
+     * Merges the information of the tags collection with the information of another tags collection.
+     * It does not take ownership of the other tags collection, so it can be used after the merge.
+     */
     pub fn merge_ref(&mut self, other: &Self) {
         for (tag, other_info) in &other.tags {
             match self.tags.get_mut(tag) {
@@ -42,6 +56,9 @@ impl TagsCollection {
         }
     }
 
+    /**
+     * Adds tags to the collection with the given word count.
+     */
     pub fn add_tags(&mut self, tags: Vec<String>, words: u32) {
         for tag in tags {
             match self.tags.get_mut(&tag) {
@@ -55,6 +72,9 @@ impl TagsCollection {
         }
     }
 
+    /**
+     * Generates a json with the tags collection information.
+     */
     pub fn generate_json(&self) -> Value {
         let mut tags_data = Value::Object(serde_json::Map::new());
         for (tag, tag_information) in &self.tags {
@@ -63,6 +83,9 @@ impl TagsCollection {
         tags_data
     }
 
+    /**
+     * Generates a json with the most chatty tags.
+     */
     pub fn generate_chatty_tags_json(&self, number_of_tags: u8) -> Value {
         let mut tags: Vec<(&String, &TagInformation)> = self.tags.iter().collect();
         tags.sort_by(|a, b| {
@@ -84,6 +107,9 @@ impl TagsCollection {
 }
 
 impl Default for TagsCollection {
+    /**
+     * Creates a new tags collection.
+     */
     fn default() -> Self {
         Self::new()
     }
