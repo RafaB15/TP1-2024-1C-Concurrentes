@@ -15,3 +15,19 @@ impl QuestionInformation {
         QuestionInformation { words, tags }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn new() {
+        let question_information =
+            QuestionInformation::new(10, vec!["tag1".to_string(), "tag2".to_string()]);
+        assert_eq!(question_information.words, 10);
+        assert_eq!(
+            question_information.tags,
+            vec!["tag1".to_string(), "tag2".to_string()]
+        );
+    }
+}

@@ -33,6 +33,9 @@ mod tests {
         };
         let question_information = question.into_information();
         assert_eq!(question_information.words, 10);
-        assert_eq!(question_information.tags, vec!["tag1".to_string(), "tag2".to_string()]);
+        assert_eq!(
+            question_information.tags,
+            vec!["tag1".to_string(), "tag2".to_string()]
+        );
     }
 }
