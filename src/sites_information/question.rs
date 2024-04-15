@@ -20,3 +20,19 @@ impl Question {
         QuestionInformation::new(word_count as u16, self.tags)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn into_information() {
+        let question = Question {
+            texts: vec!["Hello".to_string(), "World".to_string()],
+            tags: vec!["tag1".to_string(), "tag2".to_string()],
+        };
+        let question_information = question.into_information();
+        assert_eq!(question_information.words, 10);
+        assert_eq!(question_information.tags, vec!["tag1".to_string(), "tag2".to_string()]);
+    }
+}
