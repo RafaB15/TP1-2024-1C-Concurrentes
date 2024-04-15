@@ -7,7 +7,7 @@ mod tests {
     #[test]
     fn we_can_load_one_site() {
         let mut sites = SitesCollection::new();
-        let result = sites.load_sites("tests/test_data/un_archivo");
+        let result = sites.load_sites("tests/testing_data/un_archivo");
         assert!(result.is_ok());
         let parsed: Value = sites.generate_json_information("108225");
         assert_eq!(parsed["padron"], "108225");
@@ -16,7 +16,7 @@ mod tests {
     #[test]
     fn we_can_load_multiple_sites() {
         let mut sites = SitesCollection::new();
-        let result = sites.load_sites("tests/test_data/dos_archivos");
+        let result = sites.load_sites("tests/testing_data/dos_archivos");
         assert!(result.is_ok());
         let parsed: Value = sites.generate_json_information("108225");
         assert_eq!(parsed["padron"], "108225");
