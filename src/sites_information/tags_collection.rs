@@ -114,3 +114,34 @@ impl Default for TagsCollection {
         Self::new()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn new_tag_collection_si_empty() {
+        let collection = TagsCollection::new();
+        assert!(collection.tags.is_empty());
+    }
+
+    #[test]
+    fn add_tags_to_collection() {
+        let mut collection = TagsCollection::new();
+        collection.add_tags(vec!["tag1".to_string(), "tag2".to_string()], 10);
+        assert_eq!(collection.tags.len(), 2);
+    }
+
+    #[test]
+    fn merge_collections() {
+        let mut collection1 = TagsCollection::new();
+        collection1.add_tags(vec!["tag1".to_string(), "tag2".to_string()], 10);
+
+        let mut collection2 = TagsCollection::new();
+        collection2.add_tags(vec!["tag1".to_string(), "tag3".to_string()], 20);
+
+        collection1.merge(collection2);
+
+        assert_eq!(collection1.tags.len(), 3);
+    }
+}
