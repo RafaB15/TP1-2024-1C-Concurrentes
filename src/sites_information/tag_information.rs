@@ -53,3 +53,31 @@ impl TagInformation {
         tag_data
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new() {
+        let tag_info = TagInformation::new(10);
+        assert_eq!(tag_info.question_count, 1);
+        assert_eq!(tag_info.word_count, 10);
+    }
+
+    #[test]
+    fn test_add_appearance() {
+        let mut tag_info = TagInformation::new(10);
+        tag_info.add_appearance(5);
+        assert_eq!(tag_info.question_count, 2);
+        assert_eq!(tag_info.word_count, 15);
+    }
+
+    #[test]
+    fn test_merge() {
+        let mut tag_info = TagInformation::new(10);
+        tag_info.merge(TagInformation::new(5));
+        assert_eq!(tag_info.question_count, 2);
+        assert_eq!(tag_info.word_count, 15);
+    }
+}
