@@ -2,9 +2,12 @@ use serde::Deserialize;
 
 use super::question_information::QuestionInformation;
 
-/**
- * Represents a question with its texts and tags.
- */
+/// Question struct.
+///
+/// # Attributes
+///
+/// * `texts` - The texts of the question.
+/// * `tags` - The tags of the question.
 #[derive(Debug, Deserialize)]
 pub struct Question {
     texts: Vec<String>,
@@ -12,11 +15,13 @@ pub struct Question {
 }
 
 impl Question {
-    /**
-     * Converts the question into a QuestionInformation instance.
-     */
+    /// Converts the question into a QuestionInformation instance.
+    ///
+    /// # Returns
+    ///
+    /// A QuestionInformation instance with the information of the question.
     pub fn into_information(self) -> QuestionInformation {
-        let word_count: usize = self.texts.iter().map(|text| text.len()).sum();
+        let word_count: usize = self.texts.iter().map(|text| text.split_whitespace().count()).sum();
         QuestionInformation::new(word_count as u16, self.tags)
     }
 }

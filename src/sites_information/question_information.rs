@@ -1,6 +1,9 @@
-/**
- * Represents the information of a question.
- */
+/// Question information struct.
+///
+/// # Attributes
+///
+/// * `words` - The number of words in the question.
+/// * `tags` - The tags of the question.
 #[derive(Debug)]
 pub struct QuestionInformation {
     pub words: u16,
@@ -8,9 +11,16 @@ pub struct QuestionInformation {
 }
 
 impl QuestionInformation {
-    /**
-     * Creates a new question information with the given word count and tags.
-     */
+    /// Creates a new question information with the given word count and tags.
+    ///
+    /// # Arguments
+    ///
+    /// * `words` - The number of words in the question.
+    /// * `tags` - The tags of the question.
+    ///
+    /// # Returns
+    ///
+    /// A new question information instance.
     pub fn new(words: u16, tags: Vec<String>) -> Self {
         QuestionInformation { words, tags }
     }
